@@ -504,13 +504,14 @@ footer {
   cursor: pointer;
 }
 .arch-img-wrap {
-  aspect-ratio: 3/4; overflow: hidden;
+  aspect-ratio: 2/3; overflow: hidden;
   background: #e8e4de;
   margin-bottom: 1rem;
 }
 .arch-img-wrap img {
   width: 100%; height: 100%;
   object-fit: cover; display: block;
+  object-position: center 15%;
   transition: transform 0.6s ease;
 }
 .arch-item:hover .arch-img-wrap img { transform: scale(1.04); }
@@ -696,7 +697,7 @@ footer {
   <section class="arch-section">
     <div class="arch-header">
       <span class="arch-title">Archive — 2025</span>
-      <span class="arch-meta">6 items</span>
+      <span class="arch-meta">10 items</span>
     </div>
     <div class="arch-grid">
 
@@ -742,6 +743,30 @@ footer {
         <div class="arch-price">¥22,000</div>
       </div>
 
+      <div class="arch-item" onclick="openModal('images/img8.jpg','No.07','PG Diner Suit — Forest','¥50,000 (set)','ダイナーインスパイアのセットアップスーツ。フォレストグリーン。ビッグシルエットジャケット＋ワイドスラックスのセット販売。チェストポケットにPGパッチ。')">
+        <div class="arch-img-wrap"><img src="images/img8.jpg" alt="PG Diner Suit — Forest"></div>
+        <div class="arch-num">No.07</div>
+        <div class="arch-name">PG Diner Suit — Forest</div>
+        <div class="arch-price">¥50,000 (set)</div>
+      </div>
+      <div class="arch-item" onclick="openModal('images/img13.jpg','No.08','PG Diner Suit — Plum','¥50,000 (set)','ダイナーインスパイアのセットアップスーツ。プラム（深みのあるパープル）。ビッグシルエットジャケット＋ワイドスラックスのセット販売。')">
+        <div class="arch-img-wrap"><img src="images/img13.jpg" alt="PG Diner Suit — Plum"></div>
+        <div class="arch-num">No.08</div>
+        <div class="arch-name">PG Diner Suit — Plum</div>
+        <div class="arch-price">¥50,000 (set)</div>
+      </div>
+      <div class="arch-item" onclick="openModal('images/img11.jpg','No.09','PG Bomber Jacket','¥38,000','シルバーのキルティングボンバージャケット。チェストにPGパッチ刺繍。光沢感のあるナイロン素材、ビッグシルエット。')">
+        <div class="arch-img-wrap"><img src="images/img11.jpg" alt="PG Bomber Jacket"></div>
+        <div class="arch-num">No.09</div>
+        <div class="arch-name">PG Bomber Jacket</div>
+        <div class="arch-price">¥38,000</div>
+      </div>
+      <div class="arch-item" onclick="openModal('images/img12.jpg','No.10','PG Logo Tee','¥12,000','ヘビーウェイトコットンTシャツ。フロントにPGロゴをバーミリオンでプリント。ホワイト。')">
+        <div class="arch-img-wrap"><img src="images/img12.jpg" alt="PG Logo Tee"></div>
+        <div class="arch-num">No.10</div>
+        <div class="arch-name">PG Logo Tee</div>
+        <div class="arch-price">¥12,000</div>
+      </div>
     </div>
   </section>
 
