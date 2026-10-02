@@ -203,6 +203,13 @@ nav {
 
 #hotdog .split-img { order: 1; border-left: 1px solid var(--line); }
 
+/* 各splitの object-position 個別調整 */
+#apparel-split .split-img img { object-position: center 70%; }
+#hotdog .split-img img { object-position: center center; }
+
+/* 大画面で split が縦に伸びすぎないよう上限 */
+.split { max-height: 80vh; }
+
 /* CTA SECTION */
 .cta {
   background: var(--black); color: #fff;
@@ -419,8 +426,9 @@ footer {
   nav { padding: 1rem 1.5rem; }
   .nav-links { gap: 1.5rem; }
   .split { grid-template-columns: 1fr; }
-  .split-img { min-height: 55vw; order: 0 !important; }
-  #hotdog .split-img { border-left: none; border-top: 1px solid var(--line); }
+  .split-img { min-height: 55vw; order: -1 !important; }
+  .split-body { order: 1; }
+  #hotdog .split-img { border-left: none; border-bottom: 1px solid var(--line); border-top: none; }
   .split-body { padding: 3rem 2rem; }
   .concept { grid-template-columns: 1fr; }
   .concept-img { min-height: 55vw; }
@@ -502,11 +510,19 @@ footer {
 }
 .arch-item {
   cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 .arch-img-wrap {
   aspect-ratio: 2/3; overflow: hidden;
   background: #e8e4de;
   margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+.arch-num, .arch-name, .arch-price {
+  position: relative;
+  z-index: 1;
 }
 .arch-img-wrap img {
   width: 100%; height: 100%;
@@ -536,66 +552,119 @@ footer {
 }
 
 /* MODAL */
+/* ── MODAL ── */
 .arch-modal-overlay {
   display: none;
   position: fixed; inset: 0; z-index: 999;
-  background: rgba(17,17,16,0.85);
+  background: rgba(10,10,9,0.75);
+  backdrop-filter: blur(6px);
   align-items: center; justify-content: center;
   padding: 2rem;
 }
 .arch-modal-overlay.open { display: flex; }
 .arch-modal {
-  background: var(--cream);
-  max-width: 900px; width: 100%;
+  background: rgba(247,244,239,0.12);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(247,244,239,0.18);
+  max-width: 860px; width: 100%;
   max-height: 92vh; overflow-y: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  position: relative;
 }
-.arch-modal-img {
-  background: #e8e4de;
+
+/* slideshow wrapper */
+.arch-modal-slides {
+  position: relative;
+  background: rgba(0,0,0,0.25);
   aspect-ratio: 3/4;
   overflow: hidden;
 }
-.arch-modal-img img {
+.arch-modal-slides img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%;
-  object-fit: cover; display: block;
+  object-fit: cover; object-position: top center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
+.arch-modal-slides img.active { opacity: 1; }
+
+/* arrows */
+.slide-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  z-index: 2;
+  background: rgba(17,17,16,0.4);
+  color: #fff; border: none; cursor: pointer;
+  width: 2.8rem; height: 2.8rem;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  transition: background .2s;
+}
+.slide-arrow:hover { background: rgba(17,17,16,0.72); }
+.slide-arrow.prev { left: 0.6rem; }
+.slide-arrow.next { right: 0.6rem; }
+.slide-dots {
+  position: absolute; bottom: 0.8rem; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 0.4rem;
+}
+.slide-dot {
+  width: 0.45rem; height: 0.45rem; border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  transition: background .2s;
+}
+.slide-dot.active { background: #fff; }
+
 .arch-modal-body {
-  padding: 3.5rem 3rem;
+  padding: 3rem 2.8rem;
   display: flex; flex-direction: column; justify-content: center;
-  border-left: 1px solid var(--line);
+  border-left: 1px solid rgba(247,244,239,0.15);
 }
 .arch-modal-num {
-  font-size: 1.1rem; letter-spacing: 0.25em;
-  text-transform: uppercase; color: var(--mid);
-  margin-bottom: 1rem;
+  display: none;
+  font-size: 0.9rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: rgba(247,244,239,0.5);
+  margin-bottom: 0.8rem;
 }
 .arch-modal-name {
-  font-size: 2.4rem; font-weight: 700;
-  line-height: 1.1; margin-bottom: 1rem;
+  font-size: 2rem; font-weight: 700; color: #fff;
+  line-height: 1.1; margin-bottom: 0.8rem;
 }
 .arch-modal-price {
-  font-size: 1.8rem; color: var(--verm);
-  font-weight: 700; margin-bottom: 2rem;
+  font-size: 1.5rem; color: var(--verm);
+  font-weight: 700; margin-bottom: 1.6rem;
 }
 .arch-modal-desc {
-  font-size: 1.4rem; color: var(--mid);
-  line-height: 1.8; margin-bottom: 2.5rem;
-  font-family: 'Courier Prime', serif; font-weight: 300;
+  font-size: 1.1rem; color: rgba(247,244,239,0.72);
+  line-height: 1.75; margin-bottom: 2rem;
+  font-family: 'Courier Prime', serif; font-weight: 400;
 }
 .arch-modal-close {
-  position: absolute; top: 1.5rem; right: 1.5rem;
-  width: 3.2rem; height: 3.2rem;
-  background: var(--black); color: #fff;
-  border: none; cursor: pointer;
-  font-size: 1.8rem; line-height: 1;
+  position: absolute; top: 0.8rem; right: 0.8rem;
+  width: 2rem; height: 2rem;
+  background: transparent;
+  color: #fff; border: none;
+  cursor: pointer; font-size: 2.8rem;
   display: flex; align-items: center; justify-content: center;
+  transition: opacity .2s;
+  z-index: 10;
+  opacity: 0.75;
+  text-shadow: 0 1px 6px rgba(0,0,0,1), 0 0 12px rgba(0,0,0,0.9), 0 0 2px rgba(0,0,0,1);
 }
-.arch-modal-overlay { position: fixed; }
+.arch-modal-close:hover { opacity: 1; }
+
 @media(max-width:680px){
   .arch-modal { grid-template-columns: 1fr; }
-  .arch-modal-body { border-left: none; border-top: 1px solid var(--line); padding: 2.5rem 2rem; }
-  .arch-modal-img { aspect-ratio: 1; }
+  .arch-modal-slides { aspect-ratio: 1/1; }
+  .arch-modal-body {
+    border-left: none;
+    border-top: 1px solid rgba(247,244,239,0.15);
+    padding: 2rem 1.6rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+  .arch-modal-num { color: rgba(247,244,239,0.7); }
+  .arch-modal-name { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
 }
 
 .nav-logo { height: 4.8rem; display: block; }
@@ -675,15 +744,19 @@ footer {
 <div id="page-apparel" class="page">
 
   <section style="min-height:60vh;position:relative;display:flex;align-items:flex-end;padding:6rem 4rem 4rem;border-bottom:1px solid var(--line);overflow:hidden;background:var(--cream);">
-  <img src="images/img5.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+  <img src="images/img5.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%;z-index:0;">
     
   </section>
 
   <!-- ARCHIVE MODAL -->
   <div class="arch-modal-overlay" id="archModal" onclick="closeModal(event)">
-    <div class="arch-modal" style="position:relative;">
-      <button class="arch-modal-close" onclick="document.getElementById('archModal').classList.remove('open')">✕</button>
-      <div class="arch-modal-img"><img id="modalImg" src="" alt=""></div>
+    <div class="arch-modal">
+      <button class="arch-modal-close" onclick="closeArchModal()">✕</button>
+      <div class="arch-modal-slides" id="modalSlides">
+        <button class="slide-arrow prev" id="slidePrev" onclick="slideMove(-1)">&#8249;</button>
+        <button class="slide-arrow next" id="slideNext" onclick="slideMove(1)">&#8250;</button>
+        <div class="slide-dots" id="slideDots"></div>
+      </div>
       <div class="arch-modal-body">
         <div class="arch-modal-num" id="modalNum"></div>
         <div class="arch-modal-name" id="modalName"></div>
@@ -701,67 +774,67 @@ footer {
     </div>
     <div class="arch-grid">
 
-      <div class="arch-item" onclick="openModal('images/img6.jpg','No.01','PLAY GOD Hoodie','¥32,000','ヘビーウェイトのスウェットフーディー。フロントにPLAY GODロゴを大きくプリント。オーバーサイズシルエット、カラー：ブラック。')">
+      <div class="arch-item" onclick="openModal(['images/img6.jpg'],'No.01','PLAY GOD Hoodie','¥32,000','ヘビーウェイトのスウェットフーディー。フロントにPLAY GODロゴを大きくプリント。オーバーサイズシルエット、カラー：ブラック。')">
         <div class="arch-img-wrap"><img src="images/img6.jpg" alt="PLAY GOD Hoodie"></div>
         <div class="arch-num">No.01</div>
         <div class="arch-name">PLAY GOD Hoodie</div>
         <div class="arch-price">¥32,000</div>
       </div>
 
-      <div class="arch-item" onclick="openModal('images/img2.jpg','No.02','Diner Work Shirt','¥28,000','ダイナー風ワークシャツ。チェスト左にPLAY GODロゴ刺繍入り。コットン100%、レギュラーフィット。')">
+      <div class="arch-item" onclick="openModal(['images/img2.jpg'],'No.02','Diner Work Shirt','¥28,000','ダイナー風ワークシャツ。チェスト左にPLAY GODロゴ刺繍入り。コットン100%、レギュラーフィット。')">
         <div class="arch-img-wrap"><img src="images/img2.jpg" alt="Diner Work Shirt"></div>
         <div class="arch-num">No.02</div>
         <div class="arch-name">Diner Work Shirt</div>
         <div class="arch-price">¥28,000</div>
       </div>
 
-      <div class="arch-item" onclick="openModal('images/img5.jpg','No.03','Classic Apron','¥22,000','キャンバス地のワークエプロン。ロゴパッチ付き。フードスタンドでも使える実用的なデザイン。')">
+      <div class="arch-item" onclick="openModal(['images/img5.jpg'],'No.03','Classic Apron','¥22,000','キャンバス地のワークエプロン。ロゴパッチ付き。フードスタンドでも使える実用的なデザイン。')">
         <div class="arch-img-wrap"><img src="images/img5.jpg" alt="Classic Apron"></div>
         <div class="arch-num">No.03</div>
         <div class="arch-name">Classic Apron</div>
         <div class="arch-price">¥22,000</div>
       </div>
 
-      <div class="arch-item" onclick="openModal('images/img6.jpg','No.04','PG Crewneck','¥30,000','クルーネックスウェット。バックにPLAY GOD TEXTロゴ。フロントはミニマルなアーチロゴのみ。ナチュラルホワイト。')">
+      <div class="arch-item" onclick="openModal(['images/img6.jpg'],'No.04','PG Crewneck','¥30,000','クルーネックスウェット。バックにPLAY GOD TEXTロゴ。フロントはミニマルなアーチロゴのみ。ナチュラルホワイト。')">
         <div class="arch-img-wrap"><img src="images/img6.jpg" alt="PG Crewneck"></div>
         <div class="arch-num">No.04</div>
         <div class="arch-name">PG Crewneck</div>
         <div class="arch-price">¥30,000</div>
       </div>
 
-      <div class="arch-item" onclick="openModal('images/img7.jpg','No.05','PG Snap Cap','¥20,000','6パネルスナップバックキャップ。フロントにPLAY GODアイコン刺繍。グレー。')">
+      <div class="arch-item" onclick="openModal(['images/img7.jpg'],'No.05','PG Snap Cap','¥20,000','6パネルスナップバックキャップ。フロントにPLAY GODアイコン刺繍。グレー。')">
         <div class="arch-img-wrap"><img src="images/img7.jpg" alt="PG Snap Cap"></div>
         <div class="arch-num">No.05</div>
         <div class="arch-name">PG Snap Cap</div>
         <div class="arch-price">¥20,000</div>
       </div>
 
-      <div class="arch-item" onclick="openModal('images/img5.jpg','No.06','PG Tote Bag','¥22,000','ヘビーキャンバスのトートバッグ。PGテキストロゴをシルクスクリーンプリント。マチ付きでたっぷり入る。')">
+      <div class="arch-item" onclick="openModal(['images/img5.jpg'],'No.06','PG Tote Bag','¥22,000','ヘビーキャンバスのトートバッグ。PGテキストロゴをシルクスクリーンプリント。マチ付きでたっぷり入る。')">
         <div class="arch-img-wrap"><img src="images/img5.jpg" alt="PG Tote Bag"></div>
         <div class="arch-num">No.06</div>
         <div class="arch-name">PG Tote Bag</div>
         <div class="arch-price">¥22,000</div>
       </div>
 
-      <div class="arch-item" onclick="openModal('images/img8.jpg','No.07','PG Diner Suit — Forest','¥50,000 (set)','ダイナーインスパイアのセットアップスーツ。フォレストグリーン。ビッグシルエットジャケット＋ワイドスラックスのセット販売。チェストポケットにPGパッチ。')">
+      <div class="arch-item" onclick="openModal(['images/img8.jpg','images/img9.jpg'],'No.07','PG Diner Suit — Forest','¥50,000 (set','ダイナーインスパイアのセットアップスーツ。フォレストグリーン。ビッグシルエットジャケット＋ワイドスラックスのセット販売。チェストポケットにPGパッチ。')">
         <div class="arch-img-wrap"><img src="images/img8.jpg" alt="PG Diner Suit — Forest"></div>
         <div class="arch-num">No.07</div>
         <div class="arch-name">PG Diner Suit — Forest</div>
         <div class="arch-price">¥50,000 (set)</div>
       </div>
-      <div class="arch-item" onclick="openModal('images/img13.jpg','No.08','PG Diner Suit — Plum','¥50,000 (set)','ダイナーインスパイアのセットアップスーツ。プラム（深みのあるパープル）。ビッグシルエットジャケット＋ワイドスラックスのセット販売。')">
+      <div class="arch-item" onclick="openModal(['images/img13.jpg','images/img10.jpg'],'No.08','PG Diner Suit — Plum','¥50,000 (set','ダイナーインスパイアのセットアップスーツ。プラム（深みのあるパープル）。ビッグシルエットジャケット＋ワイドスラックスのセット販売。')">
         <div class="arch-img-wrap"><img src="images/img13.jpg" alt="PG Diner Suit — Plum"></div>
         <div class="arch-num">No.08</div>
         <div class="arch-name">PG Diner Suit — Plum</div>
         <div class="arch-price">¥50,000 (set)</div>
       </div>
-      <div class="arch-item" onclick="openModal('images/img11.jpg','No.09','PG Bomber Jacket','¥38,000','シルバーのキルティングボンバージャケット。チェストにPGパッチ刺繍。光沢感のあるナイロン素材、ビッグシルエット。')">
+      <div class="arch-item" onclick="openModal(['images/img11.jpg'],'No.09','PG Bomber Jacket','¥38,000','シルバーのキルティングボンバージャケット。チェストにPGパッチ刺繍。光沢感のあるナイロン素材、ビッグシルエット。')">
         <div class="arch-img-wrap"><img src="images/img11.jpg" alt="PG Bomber Jacket"></div>
         <div class="arch-num">No.09</div>
         <div class="arch-name">PG Bomber Jacket</div>
         <div class="arch-price">¥38,000</div>
       </div>
-      <div class="arch-item" onclick="openModal('images/img12.jpg','No.10','PG Logo Tee','¥12,000','ヘビーウェイトコットンTシャツ。フロントにPGロゴをバーミリオンでプリント。ホワイト。')">
+      <div class="arch-item" onclick="openModal(['images/img12.jpg'],'No.10','PG Logo Tee','¥12,000','ヘビーウェイトコットンTシャツ。フロントにPGロゴをバーミリオンでプリント。ホワイト。')">
         <div class="arch-img-wrap"><img src="images/img12.jpg" alt="PG Logo Tee"></div>
         <div class="arch-num">No.10</div>
         <div class="arch-name">PG Logo Tee</div>
@@ -827,28 +900,83 @@ function showPage(name) {
   window.scrollTo(0, 0);
 }
 
-function openModal(img, num, name, price, desc) {
-  document.getElementById('modalImg').src = img;
+/* ── Slideshow state ── */
+let _slides = [], _idx = 0, _timer = null;
+
+function openModal(imgs, num, name, price, desc) {
+  _slides = Array.isArray(imgs) ? imgs : [imgs];
+  _idx = 0;
+
+  // スライド画像を生成
+  const wrap = document.getElementById('modalSlides');
+  // 既存img要素を削除（矢印・dots以外）
+  wrap.querySelectorAll('img').forEach(el => el.remove());
+  _slides.forEach((src, i) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = i === 0 ? 'active' : '';
+    wrap.insertBefore(img, wrap.querySelector('.slide-arrow.prev'));
+  });
+
+  // dots
+  const dots = document.getElementById('slideDots');
+  dots.innerHTML = '';
+  if (_slides.length > 1) {
+    _slides.forEach((_, i) => {
+      const d = document.createElement('span');
+      d.className = 'slide-dot' + (i===0?' active':'');
+      d.onclick = () => slideTo(i);
+      dots.appendChild(d);
+    });
+  }
+
+  // 矢印の表示/非表示
+  const show = _slides.length > 1;
+  document.getElementById('slidePrev').style.display = show ? '' : 'none';
+  document.getElementById('slideNext').style.display = show ? '' : 'none';
+
+  // テキスト
   document.getElementById('modalNum').textContent = num;
   document.getElementById('modalName').textContent = name;
   document.getElementById('modalPrice').textContent = price;
   document.getElementById('modalDesc').textContent = desc;
+
   document.getElementById('archModal').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // 自動スライド
+  clearInterval(_timer);
+  if (_slides.length > 1) _timer = setInterval(() => slideMove(1), 2000);
+}
+
+function slideTo(i) {
+  const imgs = document.querySelectorAll('#modalSlides img');
+  const dots = document.querySelectorAll('.slide-dot');
+  imgs[_idx].classList.remove('active');
+  dots[_idx]?.classList.remove('active');
+  _idx = (i + _slides.length) % _slides.length;
+  imgs[_idx].classList.add('active');
+  dots[_idx]?.classList.add('active');
+}
+
+function slideMove(dir) {
+  clearInterval(_timer);
+  slideTo(_idx + dir);
+  if (_slides.length > 1) _timer = setInterval(() => slideMove(1), 2000);
+}
+
+function closeArchModal() {
+  clearInterval(_timer);
+  document.getElementById('archModal').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 function closeModal(e) {
-  if (e.target === document.getElementById('archModal')) {
-    document.getElementById('archModal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
+  if (e.target === document.getElementById('archModal')) closeArchModal();
 }
 
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    document.getElementById('archModal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
+  if (e.key === 'Escape') closeArchModal();
 });
 </script>
 
