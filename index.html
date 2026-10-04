@@ -10,6 +10,7 @@
 :root {
   --verm:  #CF4520;
   --cream: #F7F4EF;
+  --bg:    #ffffff;
   --black: #111110;
   --mid:   #888480;
   --line:  #DDD9D3;
@@ -17,7 +18,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--cream);
+  background: var(--bg);
   color: var(--black);
   font-family: 'Courier Prime', Georgia, serif;
   overflow-x: hidden;
@@ -34,7 +35,7 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0.4rem 3rem;
-  background: rgba(247,244,239,0.7);
+  background: rgba(255,255,255,0.7);
   backdrop-filter: blur(8px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
@@ -129,7 +130,7 @@ nav {
 .po-frame-verm  { background: var(--verm); }
 .po-frame-cream { background: #b8b2a8; }
 /* ギャップカラー */
-.po-gap-cream { background: var(--cream); }
+.po-gap-cream { background: var(--bg); }
 .po-gap-black { background: var(--black); }
 /* ボタン面カラー × 活版shadow */
 .po-dark {
@@ -175,7 +176,9 @@ nav {
   justify-content: center; align-items: center;
   text-align: center;
   padding: 3rem 3rem;
+  min-height: 280px;
 }
+.split-cta { margin-top: 1rem; flex-shrink: 0; }
 .split-label {
   font-size: 1.24rem; letter-spacing: 0.25em;
   text-transform: uppercase; color: var(--mid);
@@ -243,7 +246,7 @@ footer {
   padding: 6rem 4rem 4rem;
   border-bottom: 1px solid var(--line);
   overflow: hidden;
-  background: var(--cream);
+  background: var(--bg);
 }
 .sub-hero-img {
   position: absolute; inset: 0;
@@ -425,9 +428,9 @@ footer {
 @media (max-width: 768px) {
   nav { padding: 1rem 1.5rem; }
   .nav-links { gap: 1.5rem; }
-  .split { grid-template-columns: 1fr; }
+  .split { grid-template-columns: 1fr; max-height: none; }
   .split-img { min-height: 55vw; order: -1 !important; }
-  .split-body { order: 1; }
+  .split-body { order: 1; min-height: 220px; padding: 2.5rem 2rem; }
   #hotdog .split-img { border-left: none; border-bottom: 1px solid var(--line); border-top: none; }
   .split-body { padding: 3rem 2rem; }
   .concept { grid-template-columns: 1fr; }
@@ -461,7 +464,7 @@ footer {
 
 /* APPAREL PRODUCT GRID */
 .product-grid-section {
-  background: var(--cream);
+  background: var(--bg);
   padding: 4rem 2rem;
 }
 .product-grid {
@@ -484,7 +487,7 @@ footer {
 
 /* ARCHIVE GRID (apparel sub-page) */
 .arch-section {
-  background: var(--cream);
+  background: var(--bg);
   padding: 5rem 3rem 6rem;
   border-top: 1px solid var(--line);
 }
@@ -556,16 +559,16 @@ footer {
 .arch-modal-overlay {
   display: none;
   position: fixed; inset: 0; z-index: 999;
-  background: rgba(10,10,9,0.75);
+  background: rgba(10,10,9,0.35);
   backdrop-filter: blur(6px);
   align-items: center; justify-content: center;
   padding: 2rem;
 }
 .arch-modal-overlay.open { display: flex; }
 .arch-modal {
-  background: rgba(247,244,239,0.12);
+  background: rgba(255,255,255,0.7);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(247,244,239,0.18);
+  border: 1px solid rgba(17,17,16,0.12);
   max-width: 860px; width: 100%;
   max-height: 92vh; overflow-y: auto;
   display: grid;
@@ -617,16 +620,16 @@ footer {
 .arch-modal-body {
   padding: 3rem 2.8rem;
   display: flex; flex-direction: column; justify-content: center;
-  border-left: 1px solid rgba(247,244,239,0.15);
+  border-left: 1px solid rgba(17,17,16,0.12);
 }
 .arch-modal-num {
   display: none;
   font-size: 0.9rem; letter-spacing: 0.25em;
-  text-transform: uppercase; color: rgba(247,244,239,0.5);
+  text-transform: uppercase; color: var(--mid);
   margin-bottom: 0.8rem;
 }
 .arch-modal-name {
-  font-size: 2rem; font-weight: 700; color: #fff;
+  font-size: 2rem; font-weight: 700; color: var(--black);
   line-height: 1.1; margin-bottom: 0.8rem;
 }
 .arch-modal-price {
@@ -634,7 +637,7 @@ footer {
   font-weight: 700; margin-bottom: 1.6rem;
 }
 .arch-modal-desc {
-  font-size: 1.1rem; color: rgba(247,244,239,0.72);
+  font-size: 1.1rem; color: var(--black);
   line-height: 1.75; margin-bottom: 2rem;
   font-family: 'Courier Prime', serif; font-weight: 400;
 }
@@ -657,14 +660,14 @@ footer {
   .arch-modal-slides { aspect-ratio: 1/1; }
   .arch-modal-body {
     border-left: none;
-    border-top: 1px solid rgba(247,244,239,0.15);
+    border-top: 1px solid rgba(17,17,16,0.12);
     padding: 2rem 1.6rem;
     align-items: flex-start;
     justify-content: flex-start;
     overflow-y: auto;
   }
-  .arch-modal-num { color: rgba(247,244,239,0.7); }
-  .arch-modal-name { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
+  .arch-modal-num { color: var(--mid); }
+  .arch-modal-name { color: var(--black); text-shadow: none; }
 }
 
 .nav-logo { height: 4.8rem; display: block; }
@@ -697,11 +700,11 @@ footer {
 
   <!-- APPAREL SPLIT -->
   <section class="split" id="apparel-split">
-    <div class="split-img">
+    <div class="split-img" onclick="showPage('apparel')" style="cursor:pointer">
       <img src="images/img2.jpg" alt="PLAY GOD Apparel">
     </div>
     <div class="split-body">
-      <img class="section-logo" src="images/img3.png" alt="PLAY GOD">
+      <img class="section-logo" src="images/img3.png" alt="PLAY GOD" onclick="showPage('apparel')" style="cursor:pointer">
       
       <div class="split-cta">
         <span class="po-outer po-frame-black" onclick="showPage('apparel')" style="cursor:pointer">
@@ -716,7 +719,7 @@ footer {
   <!-- HOTDOG SPLIT -->
   <section class="split" id="hotdog">
     <div class="split-body">
-      <img class="section-logo" src="images/img3.png" alt="PLAY GOD HOTDOG">
+      <img class="section-logo" src="images/img3.png" alt="PLAY GOD HOTDOG" onclick="showPage('hotdog')" style="cursor:pointer">
       <div class="split-cta">
         <span class="po-outer po-frame-verm" onclick="showPage('hotdog')" style="cursor:pointer">
           <span class="po-mid po-gap-cream">
@@ -725,7 +728,7 @@ footer {
         </span>
       </div>
     </div>
-    <div class="split-img">
+    <div class="split-img" onclick="showPage('hotdog')" style="cursor:pointer">
       <img src="images/img4.jpg" alt="PLAY GOD HOTDOG">
     </div>
   </section>
@@ -743,7 +746,7 @@ footer {
      ============================================================ -->
 <div id="page-apparel" class="page">
 
-  <section style="min-height:60vh;position:relative;display:flex;align-items:flex-end;padding:6rem 4rem 4rem;border-bottom:1px solid var(--line);overflow:hidden;background:var(--cream);">
+  <section style="min-height:60vh;position:relative;display:flex;align-items:flex-end;padding:6rem 4rem 4rem;border-bottom:1px solid var(--line);overflow:hidden;background:var(--bg);">
   <img src="images/img5.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%;z-index:0;">
     
   </section>
@@ -769,76 +772,95 @@ footer {
   <!-- ARCHIVE GRID -->
   <section class="arch-section">
     <div class="arch-header">
-      <span class="arch-title">Archive — 2025</span>
-      <span class="arch-meta">10 items</span>
+      <span class="arch-title">Archive</span>
     </div>
     <div class="arch-grid">
 
       <div class="arch-item" onclick="openModal(['images/img6.jpg'],'No.01','PLAY GOD Hoodie','¥32,000','ヘビーウェイトのスウェットフーディー。フロントにPLAY GODロゴを大きくプリント。オーバーサイズシルエット、カラー：ブラック。')">
         <div class="arch-img-wrap"><img src="images/img6.jpg" alt="PLAY GOD Hoodie"></div>
-        <div class="arch-num">No.01</div>
         <div class="arch-name">PLAY GOD Hoodie</div>
         <div class="arch-price">¥32,000</div>
       </div>
 
-      <div class="arch-item" onclick="openModal(['images/img2.jpg'],'No.02','Diner Work Shirt','¥28,000','ダイナー風ワークシャツ。チェスト左にPLAY GODロゴ刺繍入り。コットン100%、レギュラーフィット。')">
-        <div class="arch-img-wrap"><img src="images/img2.jpg" alt="Diner Work Shirt"></div>
-        <div class="arch-num">No.02</div>
-        <div class="arch-name">Diner Work Shirt</div>
+      <div class="arch-item" onclick="openModal(['images/img2.jpg'],'No.02','PG Work Shirt','¥28,000','チェスト左にPLAY GODロゴ刺繍入りのワークシャツ。コットン100%、レギュラーフィット。胸ポケット付き。')">
+        <div class="arch-img-wrap"><img src="images/img2.jpg" alt="PG Work Shirt"></div>
+        <div class="arch-name">PG Work Shirt</div>
         <div class="arch-price">¥28,000</div>
       </div>
 
-      <div class="arch-item" onclick="openModal(['images/img5.jpg'],'No.03','Classic Apron','¥22,000','キャンバス地のワークエプロン。ロゴパッチ付き。フードスタンドでも使える実用的なデザイン。')">
-        <div class="arch-img-wrap"><img src="images/img5.jpg" alt="Classic Apron"></div>
-        <div class="arch-num">No.03</div>
+      <div class="arch-item" onclick="openModal(['images/img5b.jpg','images/img5.jpg'],'No.03','Classic Apron','¥22,000','キャンバス地のワークエプロン。ロゴパッチ付き。フードスタンドでも使える実用的なデザイン。')">
+        <div class="arch-img-wrap"><img src="images/img5b.jpg" alt="Classic Apron"></div>
         <div class="arch-name">Classic Apron</div>
         <div class="arch-price">¥22,000</div>
       </div>
 
       <div class="arch-item" onclick="openModal(['images/img6.jpg'],'No.04','PG Crewneck','¥30,000','クルーネックスウェット。バックにPLAY GOD TEXTロゴ。フロントはミニマルなアーチロゴのみ。ナチュラルホワイト。')">
         <div class="arch-img-wrap"><img src="images/img6.jpg" alt="PG Crewneck"></div>
-        <div class="arch-num">No.04</div>
         <div class="arch-name">PG Crewneck</div>
         <div class="arch-price">¥30,000</div>
       </div>
 
-      <div class="arch-item" onclick="openModal(['images/img7.jpg'],'No.05','PG Snap Cap','¥20,000','6パネルスナップバックキャップ。フロントにPLAY GODアイコン刺繍。グレー。')">
+      <div class="arch-item" onclick="openModal(['images/img7.jpg'],'No.05','PG Snap Cap','¥20,000','6パネルスナップバックキャップ。フロントにPLAY GODアイコン刺繍。フラットブリム。グレー。フリーサイズ（スナップ調節）。')">
         <div class="arch-img-wrap"><img src="images/img7.jpg" alt="PG Snap Cap"></div>
-        <div class="arch-num">No.05</div>
         <div class="arch-name">PG Snap Cap</div>
         <div class="arch-price">¥20,000</div>
       </div>
 
       <div class="arch-item" onclick="openModal(['images/img5.jpg'],'No.06','PG Tote Bag','¥22,000','ヘビーキャンバスのトートバッグ。PGテキストロゴをシルクスクリーンプリント。マチ付きでたっぷり入る。')">
         <div class="arch-img-wrap"><img src="images/img5.jpg" alt="PG Tote Bag"></div>
-        <div class="arch-num">No.06</div>
         <div class="arch-name">PG Tote Bag</div>
         <div class="arch-price">¥22,000</div>
       </div>
 
-      <div class="arch-item" onclick="openModal(['images/img8.jpg','images/img9.jpg'],'No.07','PG Diner Suit — Forest','¥50,000 (set','ダイナーインスパイアのセットアップスーツ。フォレストグリーン。ビッグシルエットジャケット＋ワイドスラックスのセット販売。チェストポケットにPGパッチ。')">
-        <div class="arch-img-wrap"><img src="images/img8.jpg" alt="PG Diner Suit — Forest"></div>
-        <div class="arch-num">No.07</div>
-        <div class="arch-name">PG Diner Suit — Forest</div>
+      <div class="arch-item" onclick="openModal(['images/img8.jpg','images/img9.jpg'],'No.07','PG Suit — Forest','¥50,000 (set)','ビッグシルエットのジャケット＋ワイドスラックスのセットアップ。フォレストグリーン。チェストポケットにPGパッチ刺繍。上下セット販売。')">
+        <div class="arch-img-wrap"><img src="images/img8.jpg" alt="PG Suit — Forest"></div>
+        <div class="arch-name">PG Suit — Forest</div>
         <div class="arch-price">¥50,000 (set)</div>
       </div>
-      <div class="arch-item" onclick="openModal(['images/img13.jpg','images/img10.jpg'],'No.08','PG Diner Suit — Plum','¥50,000 (set','ダイナーインスパイアのセットアップスーツ。プラム（深みのあるパープル）。ビッグシルエットジャケット＋ワイドスラックスのセット販売。')">
-        <div class="arch-img-wrap"><img src="images/img13.jpg" alt="PG Diner Suit — Plum"></div>
-        <div class="arch-num">No.08</div>
-        <div class="arch-name">PG Diner Suit — Plum</div>
+      <div class="arch-item" onclick="openModal(['images/img13.jpg','images/img10.jpg'],'No.08','PG Suit — Plum','¥50,000 (set)','ビッグシルエットのジャケット＋ワイドスラックスのセットアップ。プラム（深みのあるパープル）。上下セット販売。')">
+        <div class="arch-img-wrap"><img src="images/img13.jpg" alt="PG Suit — Plum"></div>
+        <div class="arch-name">PG Suit — Plum</div>
         <div class="arch-price">¥50,000 (set)</div>
       </div>
       <div class="arch-item" onclick="openModal(['images/img11.jpg'],'No.09','PG Bomber Jacket','¥38,000','シルバーのキルティングボンバージャケット。チェストにPGパッチ刺繍。光沢感のあるナイロン素材、ビッグシルエット。')">
         <div class="arch-img-wrap"><img src="images/img11.jpg" alt="PG Bomber Jacket"></div>
-        <div class="arch-num">No.09</div>
         <div class="arch-name">PG Bomber Jacket</div>
         <div class="arch-price">¥38,000</div>
       </div>
       <div class="arch-item" onclick="openModal(['images/img12.jpg'],'No.10','PG Logo Tee','¥12,000','ヘビーウェイトコットンTシャツ。フロントにPGロゴをバーミリオンでプリント。ホワイト。')">
         <div class="arch-img-wrap"><img src="images/img12.jpg" alt="PG Logo Tee"></div>
-        <div class="arch-num">No.10</div>
         <div class="arch-name">PG Logo Tee</div>
         <div class="arch-price">¥12,000</div>
+      </div>
+
+      <div class="arch-item" onclick="openModal(['images/img14.jpg','images/img15.jpg'],'No.11','PG Wide Denim','¥35,000','ワイドシルエットのデニムパンツ。インディゴブルー。バックベルト付き。5ポケット仕様。')">
+        <div class="arch-img-wrap"><img src="images/img14.jpg" alt="PG Wide Denim"></div>
+        <div class="arch-name">PG Wide Denim</div>
+        <div class="arch-price">¥35,000</div>
+      </div>
+
+      <div class="arch-item" onclick="openModal(['images/img16.jpg'],'No.12','PG Varsity Jacket','¥45,000','ネイビー×クリームのスタジアムジャンパー。チェストにPLAY GODサークルパッチ刺繍。スナップボタン前開き。リブカフス＆ヘム。')">
+        <div class="arch-img-wrap"><img src="images/img16.jpg" alt="PG Varsity Jacket"></div>
+        <div class="arch-name">PG Varsity Jacket</div>
+        <div class="arch-price">¥45,000</div>
+      </div>
+
+      <div class="arch-item" onclick="openModal(['images/img17.jpg'],'No.13','PG Ringer Tee','¥15,000','クリームボディ×レッドリブのリンガーTシャツ。オーバーサイズ。フロントにPLAY GODアイコン＋ロゴのラージプリント。')">
+        <div class="arch-img-wrap"><img src="images/img17.jpg" alt="PG Ringer Tee"></div>
+        <div class="arch-name">PG Ringer Tee</div>
+        <div class="arch-price">¥15,000</div>
+      </div>
+
+      <div class="arch-item" onclick="openModal(['images/img18.jpg','images/img19.jpg'],'No.14','PG Leather Jacket','¥68,000','ブラックのレザーライダースジャケット。バックにPLAY GODアイコン＋ロゴのラージプリント。フロントジップ。サイドポケット付き。')">
+        <div class="arch-img-wrap"><img src="images/img18.jpg" alt="PG Leather Jacket"></div>
+        <div class="arch-name">PG Leather Jacket</div>
+        <div class="arch-price">¥68,000</div>
+      </div>
+
+      <div class="arch-item" onclick="openModal(['images/img20.jpg','images/img21.jpg'],'No.15','PG SS Work Shirt','¥28,000','ティール×ベージュの切り替えショートスリーブワークシャツ。チェストポケットにPLAY GODパッチ刺繍。レギュラーカラー。')">
+        <div class="arch-img-wrap"><img src="images/img20.jpg" alt="PG SS Work Shirt"></div>
+        <div class="arch-name">PG SS Work Shirt</div>
+        <div class="arch-price">¥28,000</div>
       </div>
     </div>
   </section>
