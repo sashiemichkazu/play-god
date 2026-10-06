@@ -939,7 +939,7 @@ footer {
     <img src="images/img4.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;">
     <div style="position:relative;z-index:2;text-align:center;padding:2rem;">
       
-      <img src="images/img4hd.png" alt="PLAY GOD HOTDOG" style="width:min(300px,58vw);display:block;margin:0 auto;mix-blend-mode:multiply;filter:drop-shadow(0 0 30px rgba(247,244,239,0.5));">
+      <img src="images/img4hdw.png" alt="PLAY GOD HOTDOG" style="width:min(300px,58vw);display:block;margin:0 auto;filter:drop-shadow(0 0 30px rgba(247,244,239,0.3));">
     </div>
   </section>
 
@@ -950,7 +950,7 @@ footer {
 
   <!-- CONCEPT テキスト (縦積み、英語ラベルなし) -->
   <section style="background:var(--black);padding:8rem 6rem;border-top:1px solid #333;">
-    <div style="max-width:900px;display:flex;flex-direction:column;gap:6rem;">
+    <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:6rem;">
       <div style="border-bottom:1px solid #333;padding-bottom:6rem;">
         <p style="font-size:clamp(2.4rem,4vw,3.6rem);font-weight:700;color:var(--cream);line-height:1.2;margin:0 0 2rem 0;">伝統的なホットドッグを<br>シンプルに、正直に。</p>
         
@@ -984,7 +984,21 @@ function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   window.scrollTo(0, 0);
+  const slug = name === 'home' ? '/' : '/' + name;
+  history.pushState({page: name}, '', slug);
 }
+window.addEventListener('popstate', function(e) {
+  const name = (e.state && e.state.page) ? e.state.page : 'home';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+});
+// 初期URL対応
+(function() {
+  const path = location.pathname.replace(/^\//, '').replace(/\/$/, '');
+  const valid = ['apparel', 'hotdog'];
+  if (valid.includes(path)) showPage(path);
+})();
 
 /* ── Slideshow state ── */
 let _slides = [], _idx = 0, _timer = null;
