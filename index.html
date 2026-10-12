@@ -693,8 +693,8 @@ footer {
 <nav>
   <span class="nav-brand" onclick="showPage('home')" style="cursor:pointer"><img src="images/img1.png" alt="PLAY GOD" class="nav-logo"></span></a>
   <ul class="nav-links">
-    <li><a onclick="showPage('hotdog')">Hot Dog</a></li>
     <li><a onclick="showPage('shop')">Apparel</a></li>
+    <li><a onclick="showPage('hotdog')">Hot Dog</a></li>
   </ul>
 </nav>
 
@@ -982,7 +982,7 @@ footer {
 <div id="page-shop" class="page">
   <!-- Shop Slideshow with Online Store overlay -->
   <section style="position:relative;width:100%;height:70vw;max-height:680px;min-height:260px;overflow:hidden;background:#111;margin-top:0;" id="shopSlideshow">
-    <p style="position:absolute;top:6rem;left:4rem;z-index:10;font-size:1.1rem;letter-spacing:0.3em;text-transform:uppercase;color:#fff;margin:0;">Online Store</p>
+    <p style="position:absolute;top:4rem;left:4rem;z-index:10;font-size:1.1rem;letter-spacing:0.3em;text-transform:uppercase;color:#fff;margin:0;">Online Store</p>
     <div id="shopSlides" style="display:flex;height:100%;transition:transform 0.5s ease;">
       <img src="images/img2.jpg" style="min-width:100%;height:100%;object-fit:cover;object-position:center;">
       <img src="images/img5.jpg" style="min-width:100%;height:100%;object-fit:cover;object-position:center;">
@@ -1020,7 +1020,7 @@ footer {
               id: '511776719100',
               node: document.getElementById('collection-component-1791798453830'),
               moneyFormat: '%C2%A5%7B%7Bamount_no_decimals%7D%7D',
-              options: {"product":{"styles":{"product":{"@media (min-width: 601px)":{"max-width":"calc(33.333% - 24px)","margin-left":"12px","margin-right":"12px","margin-bottom":"50px","width":"calc(33.333% - 24px)"},"img":{"height":"calc(100% - 15px)","position":"absolute","left":"0","right":"0","top":"0"},"imgWrapper":{"padding-top":"calc(75% + 15px)","position":"relative","height":"0"}},"button":{":hover":{"background-color":"#009eb8"},"background-color":"#00afcc",":focus":{"background-color":"#009eb8"}}},"text":{"button":"Add to cart"}},"productSet":{"styles":{"products":{"@media (min-width: 601px)":{"margin-left":"-12px","margin-right":"-12px"}}}},"modalProduct":{"contents":{"img":false,"imgWithCarousel":true,"button":false,"buttonWithQuantity":true},"styles":{"product":{"@media (min-width: 601px)":{"max-width":"100%","margin-left":"0px","margin-bottom":"0px"}},"button":{":hover":{"background-color":"#009eb8"},"background-color":"#00afcc",":focus":{"background-color":"#009eb8"}}},"text":{"button":"Add to cart"}},"option":{},"cart":{"styles":{"button":{":hover":{"background-color":"#009eb8"},"background-color":"#00afcc",":focus":{"background-color":"#009eb8"}}},"text":{"title":"Cart（カート）","total":"Subtotal（小計）","empty":"Your cart is empty（カートを空にする）","notice":"Shipping and discount codes are added at checkout.\n配送と割引コードはチェックアウト時に追加されます。","button":"Checkout（支払い）"}},"toggle":{"styles":{"toggle":{"background-color":"#00afcc",":hover":{"background-color":"#009eb8"},":focus":{"background-color":"#009eb8"}}}}}
+              options: {"product":{"styles":{"product":{"@media (min-width: 601px)":{"max-width":"calc(25% - 24px)","margin-left":"12px","margin-right":"12px","margin-bottom":"50px","width":"calc(25% - 24px)"},"img":{"height":"calc(100% - 15px)","position":"absolute","left":"0","right":"0","top":"0"},"imgWrapper":{"padding-top":"calc(75% + 15px)","position":"relative","height":"0"}},"button":{":hover":{"background-color":"#009eb8"},"background-color":"#00afcc",":focus":{"background-color":"#009eb8"}}},"text":{"button":"Add to cart"}},"productSet":{"styles":{"products":{"@media (min-width: 601px)":{"margin-left":"-12px","margin-right":"-12px","justify-content":"flex-start"}}}},"modalProduct":{"contents":{"img":false,"imgWithCarousel":true,"button":false,"buttonWithQuantity":true},"styles":{"product":{"@media (min-width: 601px)":{"max-width":"100%","margin-left":"0px","margin-bottom":"0px"}},"button":{":hover":{"background-color":"#009eb8"},"background-color":"#00afcc",":focus":{"background-color":"#009eb8"}}},"text":{"button":"Add to cart"}},"option":{},"cart":{"styles":{"button":{":hover":{"background-color":"#009eb8"},"background-color":"#00afcc",":focus":{"background-color":"#009eb8"}}},"text":{"title":"Cart（カート）","total":"Subtotal（小計）","empty":"Your cart is empty（カートを空にする）","notice":"Shipping and discount codes are added at checkout.\n配送と割引コードはチェックアウト時に追加されます。","button":"Checkout（支払い）"}},"toggle":{"styles":{"toggle":{"background-color":"#00afcc",":hover":{"background-color":"#009eb8"},":focus":{"background-color":"#009eb8"}}}}}
             });
           });
         }
@@ -1036,15 +1036,7 @@ function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   window.scrollTo(0, 0);
-  var slug = name === 'home' ? '/' : '/' + name;
-  history.pushState({page: name}, '', slug);
 }
-window.addEventListener('popstate', function(e) {
-  var name = (e.state && e.state.page) ? e.state.page : 'home';
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  window.scrollTo(0, 0);
-});
 // Shop slideshow
 var _shopIdx = 0, _shopTimer = null;
 var _shopTotal = 3;
