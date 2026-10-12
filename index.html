@@ -469,6 +469,29 @@ footer {
   .page.active { padding-top: 3rem; }
 }
 
+/* SHOP PRODUCTS SECTION */
+.shop-products-section { padding: 4rem 4rem 6rem; }
+@media (max-width: 768px) {
+  .shop-products-section { padding: 2.5rem 1.5rem 4rem; }
+}
+@media (max-width: 480px) {
+  .shop-products-section { padding: 2rem 1rem 3rem; }
+}
+
+/* SHOP SLIDESHOW LABEL */
+.shop-label {
+  position: absolute; z-index: 10;
+  top: 4rem; left: 4rem;
+  font-size: 1.1rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: #fff; margin: 0;
+}
+@media (max-width: 768px) {
+  .shop-label { top: 2rem; left: 2rem; font-size: 0.9rem; }
+}
+@media (max-width: 480px) {
+  .shop-label { top: 1.2rem; left: 1.5rem; font-size: 0.8rem; }
+}
+
 /* APPAREL PRODUCT GRID */
 .product-grid-section {
   background: var(--bg);
@@ -982,7 +1005,7 @@ footer {
 <div id="page-shop" class="page">
   <!-- Shop Slideshow with Online Store overlay -->
   <section style="position:relative;width:100%;height:70vw;max-height:680px;min-height:260px;overflow:hidden;background:#111;margin-top:0;" id="shopSlideshow">
-    <p style="position:absolute;top:4rem;left:4rem;z-index:10;font-size:1.1rem;letter-spacing:0.3em;text-transform:uppercase;color:#fff;margin:0;">Online Store</p>
+    <p class="shop-label">Online Store</p>
     <div id="shopSlides" style="display:flex;height:100%;transition:transform 0.5s ease;">
       <img src="images/img2.jpg" style="min-width:100%;height:100%;object-fit:cover;object-position:center;">
       <img src="images/img5.jpg" style="min-width:100%;height:100%;object-fit:cover;object-position:center;">
@@ -993,7 +1016,7 @@ footer {
     <div id="shopDots" style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);display:flex;gap:0.5rem;"></div>
   </section>
 
-  <section style="padding:4rem 4rem 6rem;background:var(--bg);min-height:60vh;">
+  <section class="shop-products-section" style="background:var(--bg);min-height:60vh;">
     <div style="max-width:1100px;margin:0 auto;">
       <div id='collection-component-1791798453830'></div>
       <script type="text/javascript">
