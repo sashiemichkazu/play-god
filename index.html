@@ -695,6 +695,7 @@ footer {
   <ul class="nav-links">
     <li><a onclick="showPage('apparel')">Apparel</a></li>
     <li><a onclick="showPage('hotdog')">Hot Dog</a></li>
+    <li><a onclick="showPage('shop')">Shop</a></li>
   </ul>
 </nav>
 
@@ -999,7 +1000,7 @@ window.addEventListener('popstate', function(e) {
   if (redirect) {
     sessionStorage.removeItem('redirect');
     var page = redirect.replace(/^\//, '').replace(/\/$/, '');
-    var valid = ['apparel', 'hotdog'];
+    var valid = ['apparel', 'hotdog', 'shop'];
     if (valid.includes(page)) showPage(page);
   }
 })();
@@ -1083,6 +1084,51 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeArchModal();
 });
 </script>
+
+<div id="page-shop" class="page">
+  <section style="padding:6rem 4rem 2rem;border-bottom:1px solid var(--line);background:var(--bg);">
+    <div style="max-width:1100px;margin:0 auto;">
+      <p style="font-size:1.1rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--verm);margin-bottom:1rem;">Online Store</p>
+      <h1 style="font-size:clamp(3rem,8vw,6rem);font-weight:700;line-height:1.0;letter-spacing:-0.02em;">SHOP</h1>
+    </div>
+  </section>
+  <section style="padding:4rem 4rem 6rem;background:var(--bg);min-height:60vh;">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div id='collection-component-1791798453830'></div>
+      <script type="text/javascript">
+      /*<![CDATA[*/
+      (function () {
+        var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+        if (window.ShopifyBuy) {
+          if (window.ShopifyBuy.UI) { ShopifyBuyInit(); } else { loadScript(); }
+        } else { loadScript(); }
+        function loadScript() {
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = scriptURL;
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+          script.onload = ShopifyBuyInit;
+        }
+        function ShopifyBuyInit() {
+          var client = ShopifyBuy.buildClient({
+            domain: 'penguinappareltokyo.myshopify.com',
+            storefrontAccessToken: '80714c70bb00cceb0c16c2841885d866',
+          });
+          ShopifyBuy.UI.onReady(client).then(function (ui) {
+            ui.createComponent('collection', {
+              id: '511776719100',
+              node: document.getElementById('collection-component-1791798453830'),
+              moneyFormat: '%C2%A5%7B%7Bamount_no_decimals%7D%7D',
+              options: {"product":{"styles":{"product":{"@media (min-width: 601px)":{"max-width":"calc(25% - 20px)","margin-left":"20px","margin-bottom":"50px","width":"calc(25% - 20px)"},"img":{"height":"calc(100% - 15px)","position":"absolute","left":"0","right":"0","top":"0"},"imgWrapper":{"padding-top":"calc(75% + 15px)","position":"relative","height":"0"}},"button":{":hover":{"background-color":"#009eb8"},"background-color":"#00afcc",":focus":{"background-color":"#009eb8"}}},"text":{"button":"Add to cart"}},"productSet":{"styles":{"products":{"@media (min-width: 601px)":{"margin-left":"-20px"}}}},"modalProduct":{"contents":{"img":false,"imgWithCarousel":true,"button":false,"buttonWithQuantity":true},"styles":{"product":{"@media (min-width: 601px)":{"max-width":"100%","margin-left":"0px","margin-bottom":"0px"}},"button":{":hover":{"background-color":"#009eb8"},"background-color":"#00afcc",":focus":{"background-color":"#009eb8"}}},"text":{"button":"Add to cart"}},"option":{},"cart":{"styles":{"button":{":hover":{"background-color":"#009eb8"},"background-color":"#00afcc",":focus":{"background-color":"#009eb8"}}},"text":{"title":"Cart（カート）","total":"Subtotal（小計）","empty":"Your cart is empty（カートを空にする）","notice":"Shipping and discount codes are added at checkout.\n配送と割引コードはチェックアウト時に追加されます。","button":"Checkout（支払い）"}},"toggle":{"styles":{"toggle":{"background-color":"#00afcc",":hover":{"background-color":"#009eb8"},":focus":{"background-color":"#009eb8"}}}}}
+            });
+          });
+        }
+      })();
+      /*]]>*/
+      </script>
+    </div>
+  </section>
+</div>
 
 <footer>
     
