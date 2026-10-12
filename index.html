@@ -984,7 +984,25 @@ function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   window.scrollTo(0, 0);
+  var slug = name === 'home' ? '/' : '/' + name;
+  history.pushState({page: name}, '', slug);
 }
+window.addEventListener('popstate', function(e) {
+  var name = (e.state && e.state.page) ? e.state.page : 'home';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+});
+// 404.htmlから来た場合のリダイレクト処理
+(function() {
+  var redirect = sessionStorage.getItem('redirect');
+  if (redirect) {
+    sessionStorage.removeItem('redirect');
+    var page = redirect.replace(/^\//, '').replace(/\/$/, '');
+    var valid = ['apparel', 'hotdog'];
+    if (valid.includes(page)) showPage(page);
+  }
+})();
 
 /* ── Slideshow state ── */
 let _slides = [], _idx = 0, _timer = null;
