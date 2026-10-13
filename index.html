@@ -1077,10 +1077,15 @@ footer {
               var fit = function() {
                 var w = doc.querySelector('.shopify-buy__collection') || doc.body;
                 var h = w ? w.offsetHeight : 0;
-                if (h > 0) iframe.style.height = h + 'px';
+                if (h > 0 && iframe.style.height !== h + 'px') iframe.style.height = h + 'px';
               };
+              // 中身の高さが変わったとき
               var RO = iframe.contentWindow.ResizeObserver || window.ResizeObserver;
               if (RO) new RO(fit).observe(doc.body);
+              // ショップページが表示されて枠の幅が変わったとき
+              if (window.ResizeObserver) new ResizeObserver(fit).observe(iframe);
+              // Shopify側が高さを auto 等に戻したとき
+              new MutationObserver(fit).observe(iframe, { attributes: true, attributeFilter: ['style'] });
               fit();
             } catch(e) {}
           }
