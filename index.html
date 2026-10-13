@@ -471,6 +471,16 @@ footer {
 
 /* SHOP PRODUCTS SECTION */
 .shop-products-section { padding: 4rem 4rem 6rem; }
+
+/* Shopify Buy Button グリッド左寄せ強制 */
+.shopify-buy__collection-products,
+.shopify-buy__product-set__products,
+[class*="shopify-buy__collection"],
+[class*="shopify-buy__product-set"] {
+  justify-content: flex-start !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
 @media (max-width: 768px) {
   .shop-products-section { padding: 2.5rem 1.5rem 4rem; }
 }
