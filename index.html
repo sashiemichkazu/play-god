@@ -1053,53 +1053,66 @@ footer {
       </script>
 
       <script>
-      // v11: Shopify iframe内にグリッドCSSを注入（PC4列・スマホ2列・最終行は左寄せ）※optionsでも同設定済みの予備
+      // v11: Shopify商品枠の補正（PC4列・スマホ2列・最終行左寄せ ＋ 枠の高さを中身に合わせる）
+      // ※列の指定は上の options にもあり、これは予備。高さ補正はこちらが本体。
       (function() {
         var node = document.getElementById('collection-component-1791798453830');
         if (!node) return;
         var css = [
           '.shopify-buy__collection-products{display:grid!important;margin:0!important;text-align:left!important;}',
           '@media (min-width:601px){.shopify-buy__collection-products{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:40px 24px!important;}}',
-          '.shopify-buy__collection-products .shopify-buy__product{width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;}',
-          '@media (max-width:600px){.shopify-buy__collection-products{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px 12px!important;}}'
+          '@media (max-width:600px){.shopify-buy__collection-products{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px 12px!important;}}',
+          '.shopify-buy__collection-products .shopify-buy__product{width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;}'
         ].join('');
-        function injectCSS(iframe) {
+        var frames = [];
+        function fit(iframe) {
+          var doc;
+          try { doc = iframe.contentDocument; } catch(e) { return; }
+          if (!doc || !doc.body) return;
+          // CSS（毎回いまの中身を確認して、無ければ入れる）
+          if (doc.head && !doc.getElementById('pg-v11-css')) {
+            var s = doc.createElement('style');
+            s.id = 'pg-v11-css';
+            s.textContent = css;
+            doc.head.appendChild(s);
+          }
+          // 中身のサイズ変化を監視（中身が入れ替わったら付け直す）
+          if (iframe._pgBody !== doc.body) {
+            iframe._pgBody = doc.body;
+            var RO = (iframe.contentWindow && iframe.contentWindow.ResizeObserver) || window.ResizeObserver;
+            if (RO) new RO(function() { fit(iframe); }).observe(doc.body);
+          }
+          // 高さを中身に合わせる（表示中のみ測れる）
+          var w = doc.querySelector('.shopify-buy__collection') || doc.body;
+          var h = w.offsetHeight;
+          if (h > 0 && iframe.style.height !== h + 'px') iframe.style.height = h + 'px';
+        }
+        function setup(iframe) {
           if (iframe._pgDone) return;
           iframe._pgDone = true;
-          function tryInject() {
-            try {
-              var doc = iframe.contentDocument || iframe.contentWindow.document;
-              if (!doc || !doc.head) return;
-              var s = doc.createElement('style');
-              s.textContent = css;
-              doc.head.appendChild(s);
-              // v11: 枠の高さを中身に合わせる（非表示中に読み込まれると150pxで止まるため）
-              var fit = function() {
-                var w = doc.querySelector('.shopify-buy__collection') || doc.body;
-                var h = w ? w.offsetHeight : 0;
-                if (h > 0 && iframe.style.height !== h + 'px') iframe.style.height = h + 'px';
-              };
-              // 中身の高さが変わったとき
-              var RO = iframe.contentWindow.ResizeObserver || window.ResizeObserver;
-              if (RO) new RO(fit).observe(doc.body);
-              // ショップページが表示されて枠の幅が変わったとき
-              if (window.ResizeObserver) new ResizeObserver(fit).observe(iframe);
-              // Shopify側が高さを auto 等に戻したとき
-              new MutationObserver(fit).observe(iframe, { attributes: true, attributeFilter: ['style'] });
-              fit();
-            } catch(e) {}
-          }
-          if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
-            tryInject();
-          } else {
-            iframe.addEventListener('load', tryInject);
-          }
+          frames.push(iframe);
+          iframe.addEventListener('load', function() { fit(iframe); });
+          if (window.ResizeObserver) new ResizeObserver(function() { fit(iframe); }).observe(iframe);
+          new MutationObserver(function() { fit(iframe); }).observe(iframe, { attributes: true, attributeFilter: ['style'] });
+          fit(iframe);
         }
-        var obs = new MutationObserver(function() {
-          node.querySelectorAll('iframe').forEach(injectCSS);
+        function fitAll() { frames.forEach(fit); }
+        new MutationObserver(function() {
+          node.querySelectorAll('iframe').forEach(setup);
+          fitAll();
+        }).observe(node, { childList: true, subtree: true });
+        node.querySelectorAll('iframe').forEach(setup);
+        // ショップページに切り替えた直後にも合わせ直す
+        window.addEventListener('load', function() {
+          if (typeof window.showPage !== 'function') return;
+          var orig = window.showPage;
+          window.showPage = function() {
+            var r = orig.apply(this, arguments);
+            setTimeout(fitAll, 50);
+            setTimeout(fitAll, 600);
+            return r;
+          };
         });
-        obs.observe(node, { childList: true, subtree: true });
-        node.querySelectorAll('iframe').forEach(injectCSS);
       })();
       </script>
     </div>
