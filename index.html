@@ -1073,6 +1073,15 @@ footer {
               var s = doc.createElement('style');
               s.textContent = css;
               doc.head.appendChild(s);
+              // v11: 枠の高さを中身に合わせる（非表示中に読み込まれると150pxで止まるため）
+              var fit = function() {
+                var w = doc.querySelector('.shopify-buy__collection') || doc.body;
+                var h = w ? w.offsetHeight : 0;
+                if (h > 0) iframe.style.height = h + 'px';
+              };
+              var RO = iframe.contentWindow.ResizeObserver || window.ResizeObserver;
+              if (RO) new RO(fit).observe(doc.body);
+              fit();
             } catch(e) {}
           }
           if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
