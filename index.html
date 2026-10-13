@@ -1050,6 +1050,41 @@ footer {
       })();
       /*]]>*/
       </script>
+
+      <script>
+      // Shopify iframe内にCSS注入 → justify-content: flex-start を強制適用
+      (function() {
+        var node = document.getElementById('collection-component-1791798453830');
+        if (!node) return;
+        var css = [
+          '.shopify-buy__collection-products{justify-content:flex-start!important;display:flex!important;flex-wrap:wrap!important;}',
+          '.shopify-buy__product-set__products{justify-content:flex-start!important;}'
+        ].join('');
+        function injectCSS(iframe) {
+          if (iframe._pgDone) return;
+          iframe._pgDone = true;
+          function tryInject() {
+            try {
+              var doc = iframe.contentDocument || iframe.contentWindow.document;
+              if (!doc || !doc.head) return;
+              var s = doc.createElement('style');
+              s.textContent = css;
+              doc.head.appendChild(s);
+            } catch(e) {}
+          }
+          if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+            tryInject();
+          } else {
+            iframe.addEventListener('load', tryInject);
+          }
+        }
+        var obs = new MutationObserver(function() {
+          node.querySelectorAll('iframe').forEach(injectCSS);
+        });
+        obs.observe(node, { childList: true, subtree: true });
+        node.querySelectorAll('iframe').forEach(injectCSS);
+      })();
+      </script>
     </div>
   </section>
 </div>
